@@ -3,9 +3,28 @@
 ## Prerequisite
 #### MongoDB
 
-mkdir ~/data
+###### docker-compose.yml
+```
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongodata:/data/db"
+    networks:
+      - network1
 
-sudo docker run -d -p 27017:27017 -v ~/data:/data/db mongo
+volumes:
+   mongodata:
+
+networks:
+   network1:
+```
+```shell
+$ docker-compose up
+```
 
 ## How to run
 #### Curl
