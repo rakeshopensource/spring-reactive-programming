@@ -28,7 +28,7 @@ public class ProductcatalogclientApplication {
 	}
 
 	@Bean
-	CommandLineRunner demo(WebClient client) {
+	CommandLineRunner setup(WebClient client) {
 		return args ->
 				client.get().uri("").retrieve()
 						.bodyToFlux(Product.class)
