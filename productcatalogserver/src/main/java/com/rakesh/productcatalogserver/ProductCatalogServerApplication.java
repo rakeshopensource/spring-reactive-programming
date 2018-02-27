@@ -35,11 +35,13 @@ public class ProductCatalogServerApplication {
 				.route(GET("/products"),
 						serverRequest -> ServerResponse.ok().body(productService.all(), Product.class))
 				.andRoute(GET("/products/{id}"),
-						serverRequest -> ServerResponse.ok().body(productService.byId(serverRequest.pathVariable("id")), Product.class))
+						serverRequest -> ServerResponse.ok().body(productService.byId(
+								serverRequest.pathVariable("id")), Product.class))
 				.andRoute(GET("/products/{id}/events"), serverRequest ->
 						ServerResponse.ok()
 								.contentType(MediaType.TEXT_EVENT_STREAM)
-								.body(productService.events(serverRequest.pathVariable("id")), ProductEvent.class));
+								.body(productService.events(serverRequest.pathVariable("id")),
+										ProductEvent.class));
 
 	}
 
@@ -49,10 +51,9 @@ public class ProductCatalogServerApplication {
 			 productRepository
 					.deleteAll()
 					.thenMany(
-							Flux
-									.just("iPhone", "Mi", "Samsung")
-									.flatMap(name -> productRepository.save(new Product(name))))
-					.subscribe(null, null,
+							Flux.just("iPhone", "Mi", "Samsung")
+									.flatMap(name -> productRepository.save(new Product(name)))
+					).subscribe(null, null,
 							() -> productRepository.findAll().subscribe(System.out::println));
 		};
 	}

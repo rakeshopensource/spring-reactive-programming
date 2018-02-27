@@ -19,7 +19,6 @@ public class ProductcatalogclientApplication {
 		SpringApplication.run(ProductcatalogclientApplication.class, args);
 	}
 
-
 	@Bean
 	WebClient webClient() {
 		return WebClient
@@ -30,15 +29,10 @@ public class ProductcatalogclientApplication {
 
 	@Bean
 	CommandLineRunner demo(WebClient client) {
-		return strings ->
-				client
-						.get()
-						.uri("")
-						.retrieve()
+		return args ->
+				client.get().uri("").retrieve()
 						.bodyToFlux(Product.class)
-						.flatMap(product ->
-								client.get()
-										.uri("/{id}/events", product.getId())
+						.flatMap(product -> client.get().uri("/{id}/events", product.getId())
 										.retrieve()
 										.bodyToFlux(ProductEvent.class))
 						.subscribe(productEvent -> log.info(productEvent.toString()));
