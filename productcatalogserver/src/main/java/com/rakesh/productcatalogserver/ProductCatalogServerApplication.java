@@ -46,7 +46,7 @@ public class ProductCatalogServerApplication {
 	}
 
 	@Bean
-	CommandLineRunner demo(ProductRepository productRepository) {
+	CommandLineRunner setup(ProductRepository productRepository) {
 		return args -> {
 			 productRepository
 					.deleteAll()
